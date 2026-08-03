@@ -1,0 +1,1148 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حاسبة الإضافي — مديرية غاز جنوب المنطقة الوسطى</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ══════════════════════════════════
+       CSS Variables — Light (Neumorphic)
+    ══════════════════════════════════ */
+    :root {
+      /* ── Neumorphic palette ── */
+      --neo-bg:      #e0e5ec;
+      --neo-shadow:  #a3b1c6;
+      --neo-light:   #ffffff;
+      --neo-shadow-alt: #bebebe;
+
+      /* ── Neumorphic shadow presets ── */
+      --neo-outer:       20px 20px 60px var(--neo-shadow), -20px -20px 60px var(--neo-light);
+      --neo-outer-sm:    14px 14px 40px var(--neo-shadow), -14px -14px 40px var(--neo-light);
+      --neo-outer-hover: 24px 24px 70px #9baabb, -24px -24px 70px var(--neo-light);
+      --neo-inset:       inset 4px 4px 8px var(--neo-shadow), inset -4px -4px 8px var(--neo-light);
+      --neo-inset-focus: inset 5px 5px 10px var(--neo-shadow), inset -5px -5px 10px var(--neo-light), 0 0 0 3px rgba(26,94,168,0.18);
+      --neo-btn:         6px 6px 12px var(--neo-shadow-alt), -6px -6px 12px var(--neo-light);
+      --neo-btn-hover:   8px 8px 18px #b0bec9, -8px -8px 18px var(--neo-light);
+      --neo-btn-active:  inset 6px 6px 12px var(--neo-shadow-alt), inset -6px -6px 12px var(--neo-light);
+
+      /* ── Brand colours ── */
+      --primary:       #1a5ea8;
+      --primary-d:     #134a87;
+      --primary-m:     #2471c8;
+      --primary-l:     rgba(26,94,168,0.12);
+      --primary-glow:  rgba(26,94,168,0.20);
+      --accent:        #0a9280;
+      --accent-l:      rgba(10,146,128,0.12);
+      --warning:       #d97706;
+      --warning-l:     #fef3c7;
+
+      /* ── Text ── */
+      --text:   #0d1526;
+      --text2:  #364153;
+      --text3:  #6b7694;
+
+      /* ── Legacy aliases ── */
+      --bg:       var(--neo-bg);
+      --surface:  var(--neo-bg);
+      --surface2: #d6dbe4;
+      --border:   rgba(163,177,198,0.40);
+      --border-hov: rgba(163,177,198,0.70);
+      --sh-xs: 3px 3px 6px var(--neo-shadow);
+      --sh-sm: var(--neo-outer-sm);
+      --sh-md: var(--neo-outer);
+      --sh-lg: var(--neo-outer-hover);
+
+      --r:    18px;
+      --r-sm: 12px;
+      --r-xs:  8px;
+      --ease: cubic-bezier(.4,0,.2,1);
+      --t:  .22s;
+      --font: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    /* ══════════════════════════════════
+       Dark Mode — toggled via JS (.dark class)
+    ══════════════════════════════════ */
+    .dark {
+      --neo-bg:      #1e2535;
+      --neo-shadow:  #141926;
+      --neo-light:   #283047;
+      --neo-shadow-alt: #141926;
+      --neo-outer:       20px 20px 60px var(--neo-shadow), -20px -20px 60px var(--neo-light);
+      --neo-outer-sm:    14px 14px 40px var(--neo-shadow), -14px -14px 40px var(--neo-light);
+      --neo-outer-hover: 24px 24px 70px #111623, -24px -24px 70px #2a344e;
+      --neo-inset:       inset 4px 4px 8px var(--neo-shadow), inset -4px -4px 8px var(--neo-light);
+      --neo-inset-focus: inset 5px 5px 10px #111623, inset -5px -5px 10px #252e45, 0 0 0 3px rgba(70,153,232,0.25);
+      --neo-btn:         6px 6px 12px var(--neo-shadow), -6px -6px 12px var(--neo-light);
+      --neo-btn-hover:   8px 8px 16px #111623, -8px -8px 16px #2a344e;
+      --neo-btn-active:  inset 6px 6px 12px var(--neo-shadow), inset -6px -6px 12px var(--neo-light);
+
+      --primary:       #4699e8;
+      --primary-d:     #357ed4;
+      --primary-m:     #56a8f0;
+      --primary-l:     rgba(70,153,232,0.14);
+      --primary-glow:  rgba(70,153,232,0.22);
+      --accent:        #12b8a6;
+      --accent-l:      rgba(18,184,166,0.12);
+      --warning:       #f59e0b;
+      --warning-l:     #2a1f00;
+
+      --text:   #dde6f5;
+      --text2:  #8fa3c0;
+      --text3:  #4e6080;
+
+      --bg:       var(--neo-bg);
+      --surface:  var(--neo-bg);
+      --surface2: #1a2030;
+      --border:   rgba(255,255,255,0.06);
+      --border-hov: rgba(255,255,255,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--neo-bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background var(--t) var(--ease), color var(--t) var(--ease);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ambient blobs */
+    body::before, body::after {
+      content: '';
+      position: fixed; pointer-events: none; z-index: 0;
+      border-radius: 50%;
+    }
+    body::before {
+      width: 600px; height: 400px;
+      top: -100px; left: -120px;
+      background: radial-gradient(ellipse, rgba(26,94,168,.05) 0%, transparent 70%);
+    }
+    body::after {
+      width: 500px; height: 500px;
+      bottom: -80px; right: -80px;
+      background: radial-gradient(ellipse, rgba(10,146,128,.04) 0%, transparent 70%);
+    }
+
+    /* ══════════════════════════════════
+       HEADER — gradient preserved
+    ══════════════════════════════════ */
+    .app-header {
+      background: linear-gradient(135deg, #0a3568 0%, #1a5ea8 50%, #2679d4 100%);
+      box-shadow: 0 2px 0 rgba(255,255,255,.06) inset, 0 6px 20px rgba(13,21,38,.18);
+      position: sticky; top: 0; z-index: 100;
+      overflow: hidden;
+    }
+    .app-header::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(
+        60deg, transparent, transparent 40px,
+        rgba(255,255,255,.018) 40px, rgba(255,255,255,.018) 41px
+      );
+    }
+    .app-header::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.18) 50%, transparent 100%);
+    }
+    .dark .app-header {
+      background: linear-gradient(135deg, #040b18 0%, #0a1f3d 50%, #0e2e5a 100%);
+    }
+
+    .header-inner {
+      max-width: 860px; margin: 0 auto;
+      padding: 15px 24px;
+      display: flex; align-items: center; gap: 14px;
+      position: relative; z-index: 1;
+    }
+
+    .header-logo {
+      flex-shrink: 0;
+      filter: drop-shadow(0 3px 10px rgba(0,0,0,.35));
+      transition: transform var(--t) var(--ease);
+      cursor: default;
+    }
+    .header-logo:hover { transform: scale(1.08) rotate(-4deg); }
+    .header-logo svg { display: block; }
+
+    .header-text { flex: 1; min-width: 0; }
+    .header-title {
+      font-size: clamp(.92rem, 2.8vw, 1.28rem);
+      font-weight: 900; color: #fff; line-height: 1.25;
+      text-shadow: 0 1px 6px rgba(0,0,0,.28);
+      letter-spacing: -.015em;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .header-sub {
+      font-size: .74rem; color: rgba(255,255,255,.62);
+      margin-top: 3px; font-weight: 500; letter-spacing: .01em;
+    }
+
+    .dark-toggle {
+      flex-shrink: 0;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.1);
+      color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--t) var(--ease);
+      backdrop-filter: blur(8px);
+    }
+    .dark-toggle:hover {
+      background: rgba(255,255,255,.22);
+      border-color: rgba(255,255,255,.5);
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 0 0 5px rgba(255,255,255,.07);
+    }
+    .dark-toggle:active { transform: scale(.96); }
+
+    /* ══════════════════════════════════
+       MAIN
+    ══════════════════════════════════ */
+    .main-content {
+      flex: 1; max-width: 860px; width: 100%;
+      margin: 0 auto;
+      padding: 32px 20px 52px;
+      display: flex; flex-direction: column; gap: 22px;
+      position: relative; z-index: 1;
+    }
+
+    /* ══════════════════════════════════
+       CARD — Neumorphic
+    ══════════════════════════════════ */
+    .card {
+      background: var(--neo-bg);
+      border-radius: var(--r);
+      border: none;
+      box-shadow: var(--neo-outer);
+      overflow: hidden;
+      transition:
+        background var(--t) var(--ease),
+        box-shadow var(--t) var(--ease),
+        transform var(--t) var(--ease);
+      animation: fadeUp .48s var(--ease) both;
+      will-change: transform;
+    }
+    .card:hover {
+      box-shadow: var(--neo-outer-hover);
+      transform: translateY(-2px);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px) scale(.985); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .results-section .card { animation: none; }
+
+    /* Card header — subtle inset feel */
+    .card-header {
+      display: flex; align-items: center; gap: 13px;
+      padding: 19px 24px 15px;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      transition: border-color var(--t) var(--ease);
+    }
+
+    .card-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+    }
+    .card-icon        { background: linear-gradient(135deg, rgba(26,94,168,0.14), rgba(26,94,168,0.04)); color: var(--primary); box-shadow: 0 3px 10px var(--primary-glow); }
+    .card-icon.accent { background: linear-gradient(135deg, rgba(10,146,128,0.14), rgba(10,146,128,0.04)); color: var(--accent); box-shadow: 0 3px 10px rgba(10,146,128,0.18); }
+    .card:hover .card-icon { transform: rotate(-6deg) scale(1.1); }
+
+    .card-title {
+      font-size: 1.02rem; font-weight: 800;
+      color: var(--text); letter-spacing: -.015em;
+      transition: color var(--t) var(--ease);
+    }
+
+    /* ══════════════════════════════════
+       FORM GRID
+    ══════════════════════════════════ */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px; padding: 24px;
+    }
+    @media (max-width: 580px) {
+      .form-grid { grid-template-columns: 1fr; gap: 14px; padding: 16px; }
+      .card-header { padding: 15px 16px 13px; }
+    }
+
+    .field-group { display: flex; flex-direction: column; gap: 7px; }
+    .field-label {
+      font-size: .77rem; font-weight: 700;
+      color: var(--text3);
+      display: flex; align-items: center; gap: 7px;
+      transition: color var(--t) var(--ease);
+      user-select: none; letter-spacing: .025em;
+    }
+    .field-group:focus-within .field-label { color: var(--primary); }
+
+    .label-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--primary); flex-shrink: 0;
+      transition: transform var(--t) var(--ease), background var(--t) var(--ease);
+    }
+    .field-group:focus-within .label-dot { transform: scale(1.5); }
+
+    /* ══════════════════════════════════
+       INPUTS & SELECT — Neumorphic inset
+    ══════════════════════════════════ */
+    .form-input, .form-select {
+      width: 100%; padding: 12px 14px;
+      font-family: var(--font); font-size: .9rem; font-weight: 600;
+      color: var(--text);
+      background: var(--neo-bg);
+      border: none;
+      border-radius: var(--r-sm);
+      box-shadow: var(--neo-inset);
+      outline: none;
+      transition:
+        box-shadow var(--t) var(--ease),
+        background var(--t) var(--ease);
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-input:hover, .form-select:hover {
+      box-shadow: inset 5px 5px 10px var(--neo-shadow), inset -5px -5px 10px var(--neo-light);
+    }
+    .form-input:focus, .form-select:focus {
+      box-shadow: var(--neo-inset-focus);
+    }
+    .form-input::placeholder { color: var(--text3); font-weight: 400; }
+
+    .select-wrapper { position: relative; }
+    .select-wrapper .form-select { padding-left: 36px; cursor: pointer; }
+    .select-icon {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text3); pointer-events: none;
+      transition: color var(--t) var(--ease);
+    }
+    .field-group:focus-within .select-icon { color: var(--primary); }
+
+    /* ══════════════════════════════════
+       CEILINGS TABLE — Neumorphic inset
+    ══════════════════════════════════ */
+    .ceilings-table {
+      margin: 0 24px 8px;
+      background: var(--neo-bg);
+      border: none;
+      border-radius: var(--r-sm);
+      padding: 11px 16px;
+      box-shadow: var(--neo-inset);
+      transition: box-shadow var(--t) var(--ease), background var(--t) var(--ease);
+    }
+    @media (max-width: 580px) { .ceilings-table { margin: 0 16px 8px; } }
+
+    .ceilings-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; background: none; border: none;
+      cursor: pointer; padding: 0; width: 100%;
+    }
+    .ceilings-toggle:hover .ceilings-title { color: var(--primary); }
+    .ceilings-title {
+      font-size: .71rem; font-weight: 800; color: var(--text3);
+      letter-spacing: .04em; text-transform: uppercase;
+      transition: color var(--t) var(--ease);
+    }
+    .ceilings-arrow {
+      color: var(--text3);
+      transition: transform .3s var(--ease), color var(--t) var(--ease);
+      flex-shrink: 0;
+    }
+    .ceilings-arrow.open { transform: rotate(180deg); color: var(--primary); }
+
+    .ceilings-row { margin-top: 11px; display: flex; gap: 7px; flex-wrap: wrap; }
+
+    /* ── Ceiling cells — Neumorphic outer ── */
+    .ceiling-cell {
+      flex: 1; min-width: 78px;
+      background: var(--neo-bg);
+      border: none;
+      border-radius: var(--r-xs);
+      padding: 8px 10px; text-align: center;
+      box-shadow: var(--neo-btn);
+      transition: all var(--t) var(--ease); cursor: default;
+    }
+    .ceiling-cell:hover {
+      box-shadow: var(--neo-btn-hover);
+      transform: translateY(-2px);
+    }
+    .ceiling-cell.active {
+      box-shadow: var(--neo-btn-active);
+      color: var(--primary);
+    }
+    .ceiling-cat {
+      font-size: .68rem; font-weight: 800; color: var(--text3);
+      margin-bottom: 3px; transition: color var(--t) var(--ease);
+      letter-spacing: .03em;
+    }
+    .ceiling-cell.active .ceiling-cat { color: var(--primary); }
+    .ceiling-val {
+      font-size: .75rem; font-weight: 800; color: var(--text2);
+      direction: ltr; transition: color var(--t) var(--ease);
+    }
+    .ceiling-cell.active .ceiling-val { color: var(--primary); }
+
+    /* ══════════════════════════════════
+       BUTTONS — Neumorphic
+    ══════════════════════════════════ */
+    .btn-row {
+      display: flex; gap: 12px;
+      padding: 4px 24px 24px; flex-wrap: wrap;
+    }
+    @media (max-width: 580px) { .btn-row { padding: 4px 16px 18px; } }
+
+    .btn-primary, .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: var(--r-sm);
+      font-family: var(--font); font-size: .92rem; font-weight: 800;
+      cursor: pointer; border: none;
+      background: var(--neo-bg);
+      box-shadow: var(--neo-btn);
+      transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+      flex: 1; min-width: 140px; justify-content: center;
+      position: relative; overflow: hidden;
+      letter-spacing: .01em;
+      outline: none;
+      will-change: transform;
+    }
+    .btn-primary  { color: var(--primary); }
+    .btn-secondary{ color: var(--text2); }
+
+    .btn-primary:not(:disabled):hover,
+    .btn-secondary:not(:disabled):hover {
+      box-shadow: var(--neo-btn-hover);
+      transform: translateY(-2px);
+    }
+    .btn-primary:not(:disabled):active,
+    .btn-secondary:not(:disabled):active {
+      box-shadow: var(--neo-btn-active);
+      transform: translateY(0);
+    }
+    .btn-primary:disabled,
+    .btn-secondary:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    /* shine sweep — preserved as decorative overlay */
+    .btn-primary::before, .btn-secondary::before {
+      content: '';
+      position: absolute; top: 0; right: -100%;
+      width: 70%; height: 100%;
+      background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.20) 50%, transparent 80%);
+      transition: right .55s var(--ease); pointer-events: none;
+    }
+    .btn-primary:hover::before  { right: 130%; }
+    .btn-secondary:hover::before { right: 130%; }
+
+    /* ══════════════════════════════════
+       RESULTS SECTION
+    ══════════════════════════════════ */
+    .results-section {
+      display: flex; flex-direction: column; gap: 22px;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .5s var(--ease), transform .5s var(--ease);
+    }
+    .results-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Result boxes ── */
+    .result-boxes { display: flex; flex-direction: column; }
+
+    .result-box {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 26px; border-bottom: 1px solid var(--border);
+      background: var(--neo-bg);
+      transition:
+        background var(--t) var(--ease),
+        border-color var(--t) var(--ease),
+        padding-right var(--t) var(--ease);
+      gap: 16px; position: relative;
+    }
+    .result-box::after {
+      content: '';
+      position: absolute; right: 0; top: 18%; bottom: 18%; width: 3px;
+      background: var(--primary); border-radius: 3px 0 0 3px;
+      opacity: 0; transform: scaleY(.4);
+      transition: opacity var(--t) var(--ease), transform var(--t) var(--ease);
+    }
+    .result-box:hover::after  { opacity: 1; transform: scaleY(1); }
+    .result-box.capped::after { background: var(--warning); }
+    .result-box:last-of-type  { border-bottom: none; }
+    .result-box:hover { background: var(--surface2); padding-right: 30px; }
+    .result-box.capped       { background: var(--warning-l); }
+    .result-box.capped:hover { background: var(--warning-l); }
+
+    .result-box-label {
+      display: flex; align-items: center; gap: 11px;
+      font-size: .9rem; font-weight: 700; color: var(--text2);
+      transition: color var(--t) var(--ease);
+    }
+    .result-box:hover .result-box-label { color: var(--text); }
+
+    .result-box-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: transform var(--t) var(--ease);
+    }
+    .result-box-icon          { background: linear-gradient(135deg, rgba(26,94,168,0.12), rgba(26,94,168,0.04)); color: var(--primary); box-shadow: 0 2px 8px var(--primary-glow); }
+    .result-box.capped .result-box-icon { background: var(--warning-l); color: var(--warning); box-shadow: 0 2px 8px rgba(217,119,6,.16); }
+    .result-box:hover .result-box-icon  { transform: scale(1.12) rotate(-6deg); }
+
+    .cap-badge {
+      font-size: .63rem; background: var(--warning); color: #fff;
+      padding: 2px 8px; border-radius: 100px; font-weight: 800;
+      box-shadow: 0 2px 6px rgba(217,119,6,.3);
+    }
+
+    .result-box-amount { display: flex; align-items: baseline; gap: 5px; direction: ltr; }
+    .result-box-value {
+      font-size: 1.75rem; font-weight: 900; color: var(--primary);
+      transition: color var(--t) var(--ease); line-height: 1;
+      letter-spacing: .02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .result-box-currency {
+      font-size: .78rem; font-weight: 700; color: var(--text3);
+      transition: color var(--t) var(--ease);
+    }
+
+    /* ── Total box — gradient preserved ── */
+    .total-box {
+      background: linear-gradient(135deg, var(--primary-m) 0%, var(--primary-d) 100%);
+      padding: 22px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; position: relative; overflow: hidden;
+    }
+    .total-box::before {
+      content: '';
+      position: absolute; top: -40px; left: -40px;
+      width: 130px; height: 130px; border-radius: 50%;
+      background: rgba(255,255,255,.06); pointer-events: none;
+    }
+    .total-box::after {
+      content: '';
+      position: absolute; bottom: -30px; right: 60px;
+      width: 90px; height: 90px; border-radius: 50%;
+      background: rgba(255,255,255,.04); pointer-events: none;
+    }
+    .total-label { font-size: .93rem; font-weight: 700; color: rgba(255,255,255,.82); position: relative; }
+    .total-value {
+      font-size: 2.2rem; font-weight: 900; color: #fff; direction: ltr;
+      letter-spacing: .03em; position: relative;
+      text-shadow: 0 2px 14px rgba(0,0,0,.22);
+      font-variant-numeric: tabular-nums;
+    }
+    .total-currency { font-size: .82rem; font-weight: 700; opacity: .75; margin-right: 6px; }
+
+    /* ══════════════════════════════════
+       BREAKDOWN
+    ══════════════════════════════════ */
+    .breakdown-header-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 19px 24px 15px;
+      border-bottom: 1px solid var(--border);
+      transition: background var(--t) var(--ease), border-color var(--t) var(--ease);
+      gap: 12px;
+      border-radius: var(--r) var(--r) 0 0;
+    }
+    .breakdown-header-btn:hover { background: rgba(26,94,168,0.06); }
+    .dark .breakdown-header-btn:hover { background: rgba(70,153,232,0.06); }
+    .breakdown-header-inner { display: flex; align-items: center; gap: 12px; }
+
+    .breakdown-toggle-arrow {
+      color: var(--text3);
+      transition: transform .35s var(--ease), color var(--t) var(--ease);
+      flex-shrink: 0;
+    }
+    .breakdown-toggle-arrow.open { transform: rotate(180deg); color: var(--primary); }
+
+    .breakdown-body {
+      overflow: hidden; max-height: 0;
+      transition: max-height .45s var(--ease);
+    }
+    .breakdown-body.open { max-height: 2400px; }
+
+    .breakdown-list {
+      padding: 18px 24px 26px;
+      display: flex; flex-direction: column;
+    }
+    @media (max-width: 580px) { .breakdown-list { padding: 12px 16px 18px; } }
+
+    .breakdown-step {
+      display: flex; gap: 16px;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+      transition: border-color var(--t) var(--ease);
+      position: relative;
+    }
+    .breakdown-step:not(:last-child)::before {
+      content: '';
+      position: absolute; right: 16px; top: 50px; bottom: -18px;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(26,94,168,0.15), transparent);
+      pointer-events: none;
+    }
+    .breakdown-step:last-child { border-bottom: none; }
+    .breakdown-step.total-step {
+      background: linear-gradient(135deg, rgba(26,94,168,0.08), rgba(26,94,168,0.02));
+      margin: 0 -24px; padding: 18px 24px;
+      border-radius: 0 0 var(--r) var(--r); border-bottom: none;
+    }
+    .breakdown-step.total-step::before { display: none; }
+    @media (max-width: 580px) {
+      .breakdown-step.total-step { margin: 0 -16px; padding: 18px 16px; }
+    }
+
+    .step-num {
+      width: 33px; height: 33px; border-radius: 50%;
+      background: var(--neo-bg);
+      color: var(--primary);
+      font-size: .85rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+      box-shadow: var(--neo-btn);
+      position: relative; z-index: 1;
+      transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+    }
+    .total-step .step-num {
+      background: linear-gradient(135deg, var(--primary-m), var(--primary-d));
+      color: #fff; box-shadow: 0 4px 14px var(--primary-glow);
+    }
+    .breakdown-step:hover .step-num { transform: scale(1.12); }
+
+    .step-body { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .step-title {
+      font-size: .9rem; font-weight: 800; color: var(--text);
+      transition: color var(--t) var(--ease); letter-spacing: -.01em;
+    }
+    .step-eq {
+      font-size: .79rem; color: var(--text3); font-weight: 500;
+      background: var(--neo-bg);
+      box-shadow: var(--neo-inset);
+      padding: 5px 11px;
+      border-radius: var(--r-xs); border-right: 3px solid var(--primary);
+      transition: all var(--t) var(--ease);
+    }
+    .step-val {
+      font-size: .84rem; color: var(--text2); font-weight: 500;
+      direction: ltr; text-align: right; font-family: monospace;
+      transition: color var(--t) var(--ease);
+    }
+    .step-val strong { color: var(--primary); font-family: var(--font); font-weight: 800; }
+    .step-note {
+      font-size: .75rem; color: var(--text3); font-style: italic;
+      transition: color var(--t) var(--ease);
+    }
+
+    /* ══════════════════════════════════
+       FOOTER — Neumorphic bg
+    ══════════════════════════════════ */
+    .app-footer {
+      background: var(--neo-bg);
+      border-top: 1px solid var(--border);
+      padding: 20px 24px; text-align: center;
+      display: flex; flex-direction: column; gap: 4px;
+      transition: background var(--t) var(--ease), border-color var(--t) var(--ease);
+      position: relative; z-index: 1;
+    }
+    .app-footer p { font-size: .8rem; color: var(--text3); transition: color var(--t) var(--ease); font-weight: 500; }
+    .footer-name { color: var(--primary); font-weight: 800; }
+    .footer-copy { font-size: .72rem !important; opacity: .65; }
+
+    /* ══════════════════════════════════
+       SCROLLBAR
+    ══════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--neo-shadow); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { opacity: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+    option { background: var(--neo-bg); color: var(--text); }
+
+    /* ══════════════════════════════════
+       Reduced Motion
+    ══════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+          <circle cx="21" cy="21" r="21" fill="url(#hg)"/>
+          <path d="M13 28l8-14 8 14H13z" fill="white" opacity="0.92"/>
+          <circle cx="21" cy="17" r="3" fill="white" opacity="0.72"/>
+          <defs>
+            <linearGradient id="hg" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#2679d4"/><stop offset="1" stop-color="#0a3568"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1 class="header-title"><a href="https://spc-salary.github.io/apps/" style="color:inherit;text-decoration:none;cursor:pointer;">مديرية غاز جنوب المنطقة الوسطى</a></h1>
+        <p class="header-sub">نظام حساب الإضافي للموظفين</p>
+      </div>
+      <button class="dark-toggle" id="darkToggle" title="الوضع الليلي">
+        <svg id="iconMoon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="iconSun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- Form Card -->
+    <div class="card form-card">
+      <div class="card-header">
+        <span class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </span>
+        <h2 class="card-title">بيانات الموظف</h2>
+      </div>
+
+      <div class="form-grid">
+        <!-- طبيعة الدوام -->
+        <div class="field-group">
+          <label class="field-label"><span class="label-dot"></span>طبيعة الدوام</label>
+          <div class="select-wrapper">
+            <select class="form-select" id="shift">
+              <option value="morning">صباحي</option>
+              <option value="wardee">ورادي</option>
+            </select>
+            <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+        <!-- الفئة -->
+        <div class="field-group">
+          <label class="field-label"><span class="label-dot"></span>الفئة</label>
+          <div class="select-wrapper">
+            <select class="form-select" id="category">
+              <option value="1">فئة 1</option>
+              <option value="2">فئة 2</option>
+              <option value="3">فئة 3</option>
+              <option value="4">فئة 4</option>
+              <option value="5">فئة 5</option>
+            </select>
+            <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ceilings collapsible -->
+      <div class="ceilings-table">
+        <button class="ceilings-toggle" id="ceilingsToggle">
+          <span class="ceilings-title">سقوف الفئات (الحد الأعلى للإضافي 5%)</span>
+          <svg id="ceilingsArrow" class="ceilings-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="ceilings-row" id="ceilingsRow" style="display:none">
+          <div class="ceiling-cell active" id="ceil-1"><div class="ceiling-cat">فئة 1</div><div class="ceiling-val">704.5 ل.س</div></div>
+          <div class="ceiling-cell" id="ceil-2"><div class="ceiling-cat">فئة 2</div><div class="ceiling-val">621.5 ل.س</div></div>
+          <div class="ceiling-cell" id="ceil-3"><div class="ceiling-cat">فئة 3</div><div class="ceiling-val">592.5 ل.س</div></div>
+          <div class="ceiling-cell" id="ceil-4"><div class="ceiling-cat">فئة 4</div><div class="ceiling-val">592.5 ل.س</div></div>
+          <div class="ceiling-cell" id="ceil-5"><div class="ceiling-cat">فئة 5</div><div class="ceiling-val">549 ل.س</div></div>
+        </div>
+      </div>
+
+      <div class="form-grid" style="padding-top:0">
+        <!-- الراتب -->
+        <div class="field-group">
+          <label class="field-label"><span class="label-dot"></span>الراتب المقطوع (ليرة سورية)</label>
+          <input class="form-input" type="number" id="salary" min="0" placeholder="أدخل الراتب المقطوع"/>
+        </div>
+        <!-- ساعات 5% -->
+        <div class="field-group">
+          <label class="field-label"><span class="label-dot"></span>عدد ساعات 5%</label>
+          <input class="form-input" type="number" id="hours5" min="0" placeholder="أدخل عدد الساعات"/>
+        </div>
+        <!-- ساعات النهاري -->
+        <div class="field-group">
+          <label class="field-label"><span class="label-dot"></span>عدد ساعات النهاري</label>
+          <input class="form-input" type="number" id="hoursDay" min="0" placeholder="أدخل عدد الساعات"/>
+        </div>
+        <!-- ساعات الليلي -->
+        <div class="field-group">
+          <label class="field-label"><span class="label-dot"></span>عدد ساعات الليلي</label>
+          <input class="form-input" type="number" id="hoursNight" min="0" placeholder="أدخل عدد الساعات"/>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="calculate()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <line x1="8" y1="6" x2="16" y2="6"/>
+            <line x1="8" y1="10" x2="16" y2="10"/>
+            <line x1="8" y1="14" x2="12" y2="14"/>
+          </svg>
+          احسب الإضافي
+        </button>
+        <button class="btn-secondary" onclick="resetForm()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+          إعادة تعيين
+        </button>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-section" id="resultsSection">
+
+      <!-- Results Card -->
+      <div class="card results-card">
+        <div class="card-header">
+          <span class="card-icon accent">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </span>
+          <h2 class="card-title">نتائج الحساب</h2>
+        </div>
+
+        <div class="result-boxes" id="resultBoxes">
+          <!-- res5 -->
+          <div class="result-box" id="res5Box">
+            <div class="result-box-label">
+              <div class="result-box-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
+              <span id="res5Label">الإضافي 5%</span>
+            </div>
+            <div class="result-box-amount">
+              <span class="result-box-value" id="res5Val">0.00</span>
+              <span class="result-box-currency">ل.س</span>
+            </div>
+          </div>
+
+          <!-- resDay -->
+          <div class="result-box" id="resDayBox">
+            <div class="result-box-label">
+              <div class="result-box-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                </svg>
+              </div>
+              <span>الإضافي النهاري</span>
+            </div>
+            <div class="result-box-amount">
+              <span class="result-box-value" id="resDayVal">0.00</span>
+              <span class="result-box-currency">ل.س</span>
+            </div>
+          </div>
+
+          <!-- resNight -->
+          <div class="result-box" id="resNightBox">
+            <div class="result-box-label">
+              <div class="result-box-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+              </div>
+              <span>الإضافي الليلي</span>
+            </div>
+            <div class="result-box-amount">
+              <span class="result-box-value" id="resNightVal">0.00</span>
+              <span class="result-box-currency">ل.س</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="total-box">
+          <div class="total-label">المجموع الكلي للإضافي</div>
+          <div class="total-value"><span id="resTotalVal">0.00</span> <span class="total-currency">ليرة سورية</span></div>
+        </div>
+      </div>
+
+      <!-- Breakdown Card — collapsible -->
+      <div class="card breakdown-card">
+        <button class="breakdown-header-btn" id="breakdownToggle" onclick="toggleBreakdown()">
+          <div class="breakdown-header-inner">
+            <span class="card-icon" style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(26,94,168,0.12),rgba(26,94,168,0.04));color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px var(--primary-glow);transition:transform var(--t) var(--ease);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </span>
+            <span class="card-title">طريقة الحساب بالتفصيل</span>
+          </div>
+          <svg id="breakdownArrow" class="breakdown-toggle-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="breakdown-body" id="breakdownBody">
+          <div class="breakdown-list" id="breakdownList"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <p>تصميم وتطوير <span class="footer-name">wm.hn</span></p>
+    <p class="footer-copy">© <span id="year"></span> مديرية غاز جنوب المنطقة الوسطى</p>
+  </footer>
+
+  <script>
+    const CEILINGS      = { 1: 14090, 2: 12430, 3: 11850, 4: 11850, 5: 10980 };
+    const CURRENCY      = 'ل.س';
+    const CURRENCY_FULL = 'ليرة سورية';
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Dark Mode
+    let dark = false;
+    document.getElementById('darkToggle').addEventListener('click', () => {
+      dark = !dark;
+      document.body.classList.toggle('dark', dark);
+      document.getElementById('iconMoon').style.display = dark ? 'none'  : 'block';
+      document.getElementById('iconSun').style.display  = dark ? 'block' : 'none';
+      document.getElementById('darkToggle').title = dark ? 'الوضع النهاري' : 'الوضع الليلي';
+    });
+
+    // Ceilings Toggle
+    let ceilingsOpen = false;
+    document.getElementById('ceilingsToggle').addEventListener('click', () => {
+      ceilingsOpen = !ceilingsOpen;
+      document.getElementById('ceilingsRow').style.display = ceilingsOpen ? 'flex' : 'none';
+      document.getElementById('ceilingsArrow').classList.toggle('open', ceilingsOpen);
+    });
+
+    // Highlight active ceiling on category change
+    document.getElementById('category').addEventListener('change', function () {
+      const val = this.value;
+      [1,2,3,4,5].forEach(c => {
+        document.getElementById('ceil-' + c).classList.toggle('active', String(c) === val);
+      });
+    });
+
+    // Format Number
+    function fmt(n) {
+      return n.toFixed(2);
+    }
+
+    // Breakdown toggle
+    let breakdownOpen = false;
+    function toggleBreakdown() {
+      breakdownOpen = !breakdownOpen;
+      document.getElementById('breakdownBody').classList.toggle('open', breakdownOpen);
+      document.getElementById('breakdownArrow').classList.toggle('open', breakdownOpen);
+    }
+
+    // Show/hide a result box based on whether value is zero
+    function setBox(boxId, valId, value, extraClass) {
+      const box  = document.getElementById(boxId);
+      const span = document.getElementById(valId);
+      if (value === 0) {
+        box.style.display = 'none';
+      } else {
+        box.style.display = 'flex';
+        span.textContent = fmt(value);
+        if (extraClass) box.classList.add(extraClass);
+        else box.classList.remove('capped');
+      }
+    }
+
+    // Calculate
+    function calculate() {
+      const shift    = document.getElementById('shift').value;
+      const category = parseInt(document.getElementById('category').value);
+      const salary   = parseFloat(document.getElementById('salary').value)    || 0;
+      const h5       = parseFloat(document.getElementById('hours5').value)    || 0;
+      const hDay     = parseFloat(document.getElementById('hoursDay').value)  || 0;
+      const hNight   = parseFloat(document.getElementById('hoursNight').value)|| 0;
+
+      // صباحي ÷ 225، ورادي ÷ 180
+      const divisor  = shift === 'morning' ? 225 : 180;
+      const hourRate = salary / divisor;
+
+      const ceilFull = CEILINGS[category];
+      const ceiling  = ceilFull * 0.05;
+      const rawOt5   = hourRate * 1.25 * h5;
+      let ot5        = rawOt5;
+      const capped   = ot5 > ceiling;
+      if (capped) ot5 = ceiling;
+
+      const otDay   = hourRate * 1.25 * hDay;
+      const otNight = hourRate * 1.5  * hNight;
+      const total   = ot5 + otDay + otNight;
+
+      // Results — hide zeros
+      const res5Box = document.getElementById('res5Box');
+      if (ot5 === 0) {
+        res5Box.style.display = 'none';
+      } else {
+        res5Box.style.display = 'flex';
+        document.getElementById('res5Val').textContent = fmt(ot5);
+        const label5 = document.getElementById('res5Label');
+        label5.innerHTML = 'الإضافي 5%' + (capped ? ' <span class="cap-badge">مسقوف</span>' : '');
+        res5Box.classList.toggle('capped', capped);
+      }
+
+      const resDayBox = document.getElementById('resDayBox');
+      if (otDay === 0) {
+        resDayBox.style.display = 'none';
+      } else {
+        resDayBox.style.display = 'flex';
+        document.getElementById('resDayVal').textContent = fmt(otDay);
+        resDayBox.classList.remove('capped');
+      }
+
+      const resNightBox = document.getElementById('resNightBox');
+      if (otNight === 0) {
+        resNightBox.style.display = 'none';
+      } else {
+        resNightBox.style.display = 'flex';
+        document.getElementById('resNightVal').textContent = fmt(otNight);
+        resNightBox.classList.remove('capped');
+      }
+
+      document.getElementById('resTotalVal').textContent = fmt(total);
+
+      const shiftLabel = shift === 'morning' ? 'دوام صباحي = 225 ساعة شهرياً' : 'دوام ورادي = 180 ساعة شهرياً';
+
+      // Breakdown steps
+      let steps = '';
+
+      steps += `
+        <div class="breakdown-step">
+          <div class="step-num">١</div>
+          <div class="step-body">
+            <div class="step-title">حساب قيمة ساعة الأساس</div>
+            <div class="step-eq">الراتب المقطوع ÷ ${divisor} = قيمة ساعة الأساس</div>
+            <div class="step-val">${salary} ÷ ${divisor} = <strong>${fmt(hourRate)} ${CURRENCY}</strong></div>
+            <div class="step-note">(${shiftLabel})</div>
+          </div>
+        </div>`;
+
+      let stepNum = 2;
+
+      if (h5 > 0) {
+        steps += `
+        <div class="breakdown-step">
+          <div class="step-num">${toArabicNum(stepNum++)}</div>
+          <div class="step-body">
+            <div class="step-title">حساب الإضافي 5%</div>
+            <div class="step-eq">قيمة ساعة الأساس × 1.25 × عدد ساعات 5% = قيمة الإضافي 5%</div>
+            <div class="step-val">${fmt(hourRate)} × 1.25 × ${h5} = <strong>${fmt(rawOt5)} ${CURRENCY}</strong></div>
+            <div class="step-note">سقف الفئة ${category}: 5% × ${ceilFull} = <strong>${fmt(ceiling)} ${CURRENCY}</strong>${capped ? ' ← تم تطبيق السقف' : ''}</div>
+          </div>
+        </div>`;
+      }
+
+      if (hDay > 0) {
+        steps += `
+        <div class="breakdown-step">
+          <div class="step-num">${toArabicNum(stepNum++)}</div>
+          <div class="step-body">
+            <div class="step-title">حساب الإضافي النهاري</div>
+            <div class="step-eq">قيمة ساعة الأساس × 1.25 × عدد ساعات النهاري = قيمة الإضافي النهاري</div>
+            <div class="step-val">${fmt(hourRate)} × 1.25 × ${hDay} = <strong>${fmt(otDay)} ${CURRENCY}</strong></div>
+          </div>
+        </div>`;
+      }
+
+      if (hNight > 0) {
+        steps += `
+        <div class="breakdown-step">
+          <div class="step-num">${toArabicNum(stepNum++)}</div>
+          <div class="step-body">
+            <div class="step-title">حساب الإضافي الليلي</div>
+            <div class="step-eq">قيمة ساعة الأساس × 1.50 × عدد ساعات الليلي = قيمة الإضافي الليلي</div>
+            <div class="step-val">${fmt(hourRate)} × 1.50 × ${hNight} = <strong>${fmt(otNight)} ${CURRENCY}</strong></div>
+          </div>
+        </div>`;
+      }
+
+      steps += `
+        <div class="breakdown-step total-step">
+          <div class="step-num">${toArabicNum(stepNum)}</div>
+          <div class="step-body">
+            <div class="step-title">المجموع الكلي</div>
+            <div class="step-eq">إضافي 5% + إضافي نهاري + إضافي ليلي = المجموع</div>
+            <div class="step-val">${fmt(ot5)} + ${fmt(otDay)} + ${fmt(otNight)} = <strong>${fmt(total)} ${CURRENCY}</strong></div>
+          </div>
+        </div>`;
+
+      document.getElementById('breakdownList').innerHTML = steps;
+
+      // Show results with animation
+      const section = document.getElementById('resultsSection');
+      section.classList.remove('visible');
+      void section.offsetWidth;
+      setTimeout(() => {
+        section.classList.add('visible');
+        setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      }, 50);
+    }
+
+    // Arabic numerals helper
+    function toArabicNum(n) {
+      const nums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+      return String(n).split('').map(d => nums[parseInt(d)] || d).join('');
+    }
+
+    // Reset
+    function resetForm() {
+      document.getElementById('shift').value    = 'morning';
+      document.getElementById('category').value = '1';
+      document.getElementById('salary').value   = '';
+      document.getElementById('hours5').value   = '';
+      document.getElementById('hoursDay').value = '';
+      document.getElementById('hoursNight').value = '';
+      [1,2,3,4,5].forEach(c =>
+        document.getElementById('ceil-' + c).classList.toggle('active', c === 1)
+      );
+      document.getElementById('resultsSection').classList.remove('visible');
+      breakdownOpen = false;
+      document.getElementById('breakdownBody').classList.remove('open');
+      document.getElementById('breakdownArrow').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
