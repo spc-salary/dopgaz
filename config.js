@@ -6,5 +6,5 @@
 var APP_CONFIG = {
   // ضع هنا عنوان URL للـ Web App بعد نشر Code.gs
   // مثال: https://script.google.com/macros/s/AKfycbxXXX.../exec
-  API_URL: 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE'
+  API_URL: 'https://script.google.com/macros/s/AKfycbxrg2qr7Iw2GZy0YQNlocQWtL5saK__8WsQ779DOyxGlvm2jJ57xceXB27-CDyAq4XZwQ/exec'
 };
