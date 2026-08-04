@@ -8,7 +8,7 @@
   "theme_color": "#1766C2",
   "icons": [
     {
-      "src": "https://github.com/spc-salary/dopgaz/blob/main/assets/unnamed.png",
+      "src": "/dopgaz/assets/unnamed.png",
       "sizes": "192x192 512x512",
       "type": "image/png"
     }
