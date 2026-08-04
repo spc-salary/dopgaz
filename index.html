@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <!-- ربط ملف الـ Manifest بمساره الصحيح داخل المجلد الفرعي -->
-  <link rel="manifest" href="/dopgaz/manifest.json">
-  <meta name="theme-color" content="#1766C2">
+   <!-- ربط ملف الـ Manifest بمساره الصحيح داخل المجلد الفرعي -->
+<link rel="manifest" href="/dopgaz/manifest.json">
+<meta name="theme-color" content="#1766C2">
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -13,18 +13,23 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="الأعمال اليومية">
   <title>نظام الأعمال اليومية</title>
+
    <!-- الخطوط والأيقونات -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <!-- مكتبات التصدير -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <!-- التنسيقات -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
 <!-- شاشة السبلاش -->
 <div id="splash">
   <div class="splash-shell" role="status" aria-live="polite" aria-label="جارٍ تجهيز النظام">
@@ -53,6 +58,7 @@
     </div>
   </div>
 </div>
+
 <!-- شاشة تسجيل الدخول -->
 <div id="loginScreen">
   <div class="login-card">
@@ -63,6 +69,7 @@
       <div class="login-title">تسجيل الدخول</div>
       <div class="login-subtitle">أدخل رقمك الذاتي وكلمة المرور</div>
     </div>
+
     <!-- حقل الرقم الذاتي -->
     <div class="input-group">
       <label class="input-label" for="userId">الرقم الذاتي</label>
@@ -73,6 +80,7 @@
         <span class="material-icons field-icon">badge</span>
       </div>
     </div>
+
     <!-- حقل كلمة المرور -->
     <div class="input-group">
       <label class="input-label" for="password">كلمة المرور</label>
@@ -86,6 +94,7 @@
         </button>
       </div>
     </div>
+
     <!-- تذكرني -->
     <label class="remember-row" for="rememberMe">
       <input type="checkbox" id="rememberMe">
@@ -94,6 +103,7 @@
       </span>
       <span class="remember-label">تذكرني</span>
     </label>
+
     <button class="btn btn-primary" id="loginBtn" onclick="doLogin()">
       <span id="loginBtnText">تسجيل الدخول</span>
       <span id="loginSpinner" style="display:none;"><span class="spinner"></span></span>
@@ -101,6 +111,7 @@
     <div id="loginError" style="display:none; margin-top:14px; color:var(--error); text-align:center; font-weight:600; font-size:0.9rem;"></div>
   </div>
 </div>
+
 <!-- ==========================================
      مودال إنشاء كلمة المرور (أول مرة)
 ========================================== -->
@@ -114,6 +125,7 @@
       <span class="material-icons">info_outline</span>
       <span>هذه أول مرة تسجّل فيها الدخول. يرجى إنشاء كلمة مرور خاصة بك لتتمكن من الوصول إلى النظام في المستقبل.</span>
     </div>
+
     <!-- كلمة المرور الجديدة -->
     <div class="input-group">
       <label class="input-label" for="newPassword">كلمة المرور الجديدة</label>
@@ -130,6 +142,7 @@
       <div class="pw-strength-bar"><div class="pw-strength-fill" id="pwStrengthFill"></div></div>
       <div class="pw-strength-text" id="pwStrengthText"></div>
     </div>
+
     <!-- تأكيد كلمة المرور -->
     <div class="input-group" style="margin-bottom:0;">
       <label class="input-label" for="confirmPassword">تأكيد كلمة المرور</label>
@@ -143,6 +156,7 @@
         </button>
       </div>
     </div>
+
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="doSetPassword()" id="setPwBtn">
         <span class="material-icons">save</span>
@@ -153,10 +167,12 @@
     </div>
   </div>
 </div>
+
 <!-- ==========================================
      غطاء لوحة الإدارة
 ========================================== -->
 <div class="admin-overlay" id="adminOverlay" onclick="closeAdminPanel()"></div>
+
 <!-- ==========================================
      لوحة الإدارة الجانبية
 ========================================== -->
@@ -171,8 +187,10 @@
       <span class="material-icons">close</span>
     </button>
   </div>
+
   <!-- المحتوى -->
   <div class="admin-drawer-body">
+
     <!-- أولاً: بطاقة معلومات الحساب -->
     <div class="admin-info-card">
       <div class="admin-info-card-inner">
@@ -197,6 +215,7 @@
         </div>
       </div>
     </div>
+
     <!-- ثانياً: ملخص النشاط -->
     <div class="admin-stats-section">
       <div class="admin-section-title">
@@ -204,6 +223,7 @@
         ملخص نشاطي
         <span class="section-badge">مباشر</span>
       </div>
+
       <!-- حالة التحميل -->
       <div class="stat-grid" id="statSkeletonGrid">
         <div class="stat-skeleton"></div>
@@ -211,6 +231,7 @@
         <div class="stat-skeleton"></div>
         <div class="stat-skeleton"></div>
       </div>
+
       <!-- البطاقات الإحصائية -->
       <div class="stat-grid" id="statCardsGrid" style="display:none;">
         <!-- إجمالي التقارير -->
@@ -238,16 +259,20 @@
           <div class="stat-card-label">آخر تعديل</div>
         </div>
       </div>
+
       <!-- رسالة خطأ -->
       <div id="statError" style="display:none; color:var(--error); font-size:0.83rem; font-weight:600; text-align:center; padding:8px 0;"></div>
     </div>
+
     <div class="admin-section-divider"></div>
+
     <!-- ثالثاً: إعادة تعيين كلمة المرور -->
     <div class="admin-pw-section">
     <div class="admin-section-title">
       <span class="material-icons">lock_reset</span>
       إعادة تعيين كلمة المرور
     </div>
+
     <!-- كلمة المرور الحالية -->
     <div class="input-group">
       <label class="input-label" for="currentPwd">كلمة المرور الحالية</label>
@@ -262,6 +287,7 @@
         </button>
       </div>
     </div>
+
     <!-- كلمة المرور الجديدة -->
     <div class="input-group">
       <label class="input-label" for="newPwd">كلمة المرور الجديدة</label>
@@ -281,6 +307,7 @@
       </div>
       <div class="pw-strength-text" id="changePwStrengthText"></div>
     </div>
+
     <!-- تأكيد كلمة المرور الجديدة -->
     <div class="input-group">
       <label class="input-label" for="confirmPwd">تأكيد كلمة المرور الجديدة</label>
@@ -295,6 +322,7 @@
         </button>
       </div>
     </div>
+
     <button class="btn btn-change-pw" id="changePwBtn" onclick="doChangePassword()">
       <span class="material-icons">save</span>
       <span id="changePwBtnText">حفظ التغييرات</span>
@@ -302,6 +330,7 @@
         <span class="spinner"></span>
       </span>
     </button>
+
     <div id="changePwError"
       style="display:none; margin-top:12px; color:var(--error);
              text-align:center; font-weight:600; font-size:0.88rem;"></div>
@@ -311,9 +340,11 @@
 
 <!-- ==========================================
      لوحة مراقبة المشرف الخاص — Super Admin
+     (مخفية — لا تظهر إلا لـ userId=9999)
 ========================================== -->
 <div class="sa-overlay" id="saOverlay" onclick="closeSuperAdminPanel()"></div>
 <div class="sa-panel" id="saPanel">
+
   <div class="sa-panel-header">
     <div class="sa-header-top">
       <div class="sa-header-title">
@@ -352,6 +383,7 @@
       </button>
     </div>
   </div>
+
   <div class="sa-panel-body" id="saPanelBody">
     <div id="saLoadingState" style="text-align:center;padding:48px 24px;">
       <div class="spinner spinner-dark"></div>
@@ -382,6 +414,7 @@
         </table>
       </div>
     </div>
+
     <!-- تبويب إدارة المستخدمين والصلاحيات -->
     <div id="saUsersContent" style="display:none;">
       <div id="saUmLoadingState" style="text-align:center;padding:48px 24px;">
@@ -405,6 +438,7 @@
       </div>
     </div>
   </div>
+
   <div style="flex-shrink:0;padding:10px 16px;border-top:1px solid var(--border);
               background:var(--surface2);display:flex;align-items:center;justify-content:space-between;">
     <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">
@@ -419,7 +453,707 @@
       <span class="material-icons" style="font-size:14px;">refresh</span>تحديث
     </button>
   </div>
+
 </div><!-- /.sa-panel -->
+
+<!-- ==========================================
+     غطاء لوحة تحكم المشرف (جديدة)
+========================================== -->
+<div class="sup-overlay" id="supOverlay" onclick="closeSupervisorPanel()"></div>
+
+<!-- ==========================================
+     لوحة تحكم المشرف — Supervisor Panel (جديدة)
+========================================== -->
+<div class="sup-panel" id="supPanel">
+
+  <div class="sup-panel-header">
+    <div class="sup-header-top">
+      <div class="sup-header-title">
+        <span class="material-icons">admin_panel_settings</span>
+        لوحة تحكم المشرف
+        <span class="sup-header-badge">للمشرفين فقط</span>
+      </div>
+      <button class="btn-close-sup" onclick="closeSupervisorPanel()" title="إغلاق">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="sup-admin-info">
+      <div class="sup-admin-avatar"><span class="material-icons">person</span></div>
+      <div>
+        <div class="sup-admin-name" id="supAdminName">—</div>
+        <div class="sup-admin-role">
+          <span class="material-icons">verified</span>
+          <span id="supAdminRole">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sup-tabs">
+    <div class="sup-tab active" id="supTab1" onclick="switchSupTab('supTabToday', this)" title="إدخالات اليوم">
+      <span class="material-icons">today</span><span class="sup-tab-label">إدخالات اليوم</span>
+    </div>
+    <div class="sup-tab" id="supTab2" onclick="switchSupTab('supTabMonthly', this)" title="الإحصاء الشهري">
+      <span class="material-icons">bar_chart</span><span class="sup-tab-label">الإحصاء الشهري</span>
+    </div>
+    <div class="sup-tab" id="supTab3" onclick="switchSupTab('supTabExport', this); initExportCenter()" title="مركز التصدير والتقارير">
+      <span class="material-icons">summarize</span><span class="sup-tab-label">مركز التصدير والتقارير</span>
+    </div>
+  </div>
+
+  <div class="sup-panel-body" id="supPanelBody">
+
+    <div class="sup-loading" id="supLoadingState">
+      <div class="spinner spinner-dark"></div>
+      <p>جارٍ التحقق من الصلاحيات وتحميل البيانات...</p>
+    </div>
+
+    <div id="supErrorState" style="display:none; text-align:center; padding:48px 24px;">
+      <span class="material-icons" style="font-size:48px; color:var(--error); margin-bottom:12px; display:block;">block</span>
+      <div style="font-weight:700; color:var(--error); font-size:1rem;" id="supErrorMsg">خطأ في الوصول</div>
+      <div style="color:var(--text-muted); font-size:0.85rem; margin-top:8px;">تأكد من صلاحياتك وأعد المحاولة</div>
+    </div>
+
+    <div id="supContent" style="display:none;">
+
+      <div class="sup-stat-grid">
+        <div class="sup-stat-card stat-purple">
+          <div class="sup-stat-icon"><span class="material-icons">description</span></div>
+          <div class="sup-stat-value" id="supStatMonthTotal">0</div>
+          <div class="sup-stat-label">إدخالات الشهر</div>
+        </div>
+        <div class="sup-stat-card stat-teal">
+          <div class="sup-stat-icon"><span class="material-icons">today</span></div>
+          <div class="sup-stat-value" id="supStatTodayCount">0</div>
+          <div class="sup-stat-label">إدخالات اليوم</div>
+        </div>
+        <div class="sup-stat-card stat-blue">
+          <div class="sup-stat-icon"><span class="material-icons">people</span></div>
+          <div class="sup-stat-value" id="supStatActiveUsers">0</div>
+          <div class="sup-stat-label">موظفون نشطون</div>
+        </div>
+      </div>
+
+      <div class="sup-tab-content active" id="supTabToday">
+        <div class="sup-section-title">
+          <span class="material-icons">fact_check</span>
+          من أرسل اليوم؟
+          <span class="count-badge" id="supTodayBadge">0</span>
+        </div>
+        <div id="supTodayList">
+          <div class="empty-state"><span class="material-icons">hourglass_empty</span><p>جارٍ التحميل...</p></div>
+        </div>
+      </div>
+
+      <div class="sup-tab-content" id="supTabMonthly">
+        <div class="sup-section-title">
+          <span class="material-icons">leaderboard</span>
+          نشاط الموظفين هذا الشهر
+          <span class="count-badge" id="supMonthBadge">0</span>
+        </div>
+        <div id="supMonthlyTable" style="overflow-x:auto; border-radius:10px; border:1px solid var(--border);">
+          <div class="empty-state"><span class="material-icons">hourglass_empty</span><p>جارٍ التحميل...</p></div>
+        </div>
+      </div>
+
+      <!-- تبويب مركز التصدير والتقارير (جديد) — إضافة مستقلة تماماً -->
+      <div class="sup-tab-content" id="supTabExport">
+
+        <div class="exp-card">
+          <div class="exp-card-title"><span class="material-icons">summarize</span>مركز التصدير والتقارير</div>
+          <p class="exp-card-desc">صدّر بيانات الأعمال اليومية بصيغة PDF أو HTML أو Excel أو CSV، أو اطبعها مباشرة، مع إحصاءات تحليلية عن نشاط الموظفين — بعد تصفية النتائج بالفترة والموظف والمكتب ونوع البيانات المطلوبة.</p>
+
+          <div class="exp-periods">
+            <button class="exp-period-btn active" data-period="today" onclick="setExportPeriod('today', this)">اليوم</button>
+            <button class="exp-period-btn" data-period="week" onclick="setExportPeriod('week', this)">هذا الأسبوع</button>
+            <button class="exp-period-btn" data-period="month" onclick="setExportPeriod('month', this)">هذا الشهر</button>
+            <button class="exp-period-btn" data-period="custom" onclick="setExportPeriod('custom', this)">فترة مخصصة</button>
+          </div>
+
+          <div class="exp-filter-grid">
+            <div class="exp-filter-group" id="expCustomFromGroup" style="display:none;">
+              <label>من تاريخ</label>
+              <input type="date" id="expDateFrom">
+            </div>
+            <div class="exp-filter-group" id="expCustomToGroup" style="display:none;">
+              <label>إلى تاريخ</label>
+              <input type="date" id="expDateTo">
+            </div>
+            <div class="exp-filter-group">
+              <label>الموظف</label>
+              <select id="expFilterEmployee"><option value="">كل الموظفين</option></select>
+            </div>
+            <div class="exp-filter-group">
+              <label>المكتب / الوحدة</label>
+              <select id="expFilterOffice"><option value="">كل المكاتب</option></select>
+            </div>
+            <div class="exp-filter-group">
+              <label>نوع البيانات</label>
+              <select id="expFilterDataType">
+                <option value="all">كل الإدخالات</option>
+                <option value="withNote">فيها ملاحظة مشرف مباشر</option>
+                <option value="withRating">فيها تقييم رئيس الشعبة</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="exp-generate-btn" id="expGenerateBtn" onclick="generateExportReport()">
+            <span class="material-icons">insights</span>
+            <span id="expGenerateBtnText">إنشاء التقرير</span>
+            <span id="expGenerateSpinner" style="display:none;"><span class="spinner"></span></span>
+          </button>
+        </div>
+
+        <div id="expResultsWrap" style="display:none;">
+
+          <div class="exp-card">
+            <div class="exp-card-title"><span class="material-icons">bar_chart</span>إحصاءات عامة</div>
+            <p class="exp-card-desc" id="expRangeLabel"></p>
+            <div class="exp-stat-grid">
+              <div class="exp-stat-card"><div class="exp-stat-value" id="expStatEmployees">0</div><div class="exp-stat-label">عدد الموظفين</div></div>
+              <div class="exp-stat-card"><div class="exp-stat-value" id="expStatEntries">0</div><div class="exp-stat-label">عدد الإدخالات</div></div>
+              <div class="exp-stat-card"><div class="exp-stat-value" id="expStatMostActive">—</div><div class="exp-stat-label">أكثر الأيام نشاطاً</div></div>
+              <div class="exp-stat-card"><div class="exp-stat-value" id="expStatLeastActive">—</div><div class="exp-stat-label">أقل الأيام نشاطاً</div></div>
+            </div>
+
+            <div class="exp-card-title" style="margin-top:6px;"><span class="material-icons">leaderboard</span>مقارنة الموظفين (عدد الإدخالات)</div>
+            <div id="expEmployeeStats"></div>
+          </div>
+
+          <div class="exp-card">
+            <div class="exp-card-title"><span class="material-icons">file_download</span>التصدير والطباعة</div>
+            <p class="exp-card-desc">يشمل التصدير فقط النتائج المطابقة للفلاتر المختارة أعلاه.</p>
+            <div class="exp-actions-grid">
+              <button class="exp-action-btn exp-pdf" id="expBtnPdf" onclick="exportReportAsPdf()">
+                <span class="material-icons">picture_as_pdf</span>PDF
+              </button>
+              <button class="exp-action-btn exp-html" id="expBtnHtml" onclick="exportReportAsHtml()">
+                <span class="material-icons">html</span>HTML
+              </button>
+              <button class="exp-action-btn exp-excel" id="expBtnExcel" onclick="exportReportAsExcel()">
+                <span class="material-icons">table_view</span>Excel
+              </button>
+              <button class="exp-action-btn exp-csv" id="expBtnCsv" onclick="exportReportAsCsv()">
+                <span class="material-icons">description</span>CSV
+              </button>
+              <button class="exp-action-btn exp-print" id="expBtnPrint" onclick="printExportReport()">
+                <span class="material-icons">print</span>طباعة
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="expEmptyHint" class="exp-empty-hint">
+          <span class="material-icons" style="font-size:34px;display:block;margin-bottom:6px;opacity:0.5;">insights</span>
+          اختر الفترة والفلاتر المطلوبة ثم اضغط "إنشاء التقرير"
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div style="flex-shrink:0; padding:12px 20px; border-top:1px solid var(--border);
+              background:var(--surface2); display:flex; align-items:center; justify-content:space-between;">
+    <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">
+      <span class="material-icons" style="font-size:14px; vertical-align:-2px;">schedule</span>
+      <span id="supLastRefresh">—</span>
+    </span>
+    <button onclick="refreshSupervisorPanel()"
+      style="display:inline-flex; align-items:center; gap:5px; padding:6px 14px;
+             border:1.5px solid rgba(123,31,162,0.3); border-radius:20px;
+             background:rgba(123,31,162,0.06); color:#7B1FA2;
+             font-family:var(--font); font-size:0.78rem; font-weight:700;
+             cursor:pointer; transition:all 0.2s;">
+      <span class="material-icons" style="font-size:15px;">refresh</span>تحديث
+    </button>
+  </div>
+
+</div><!-- /.sup-panel -->
+
+<!-- التطبيق الرئيسي -->
+<div id="appScreen">
+
+  <!-- مؤشر حالة الاتصال — نقطة صغيرة ثابتة في زاوية الشاشة (لا تشغل مساحة من الشريط العلوي) -->
+  <div class="conn-dot-wrap conn-online" id="connDot" tabindex="0" onclick="showConnectionStatusMessage()">
+    <span class="conn-dot"></span>
+    <span class="conn-dot-tip" id="connDotTip">متصل بالإنترنت</span>
+  </div>
+
+  <!-- شريط تنبيه العمل بدون اتصال — يظهر فقط عند انقطاع الإنترنت -->
+  <div class="offline-banner" id="offlineBanner" style="display:none;">
+    <span class="material-icons">cloud_off</span>
+    <span>أنت تعمل حالياً بدون اتصال بالإنترنت، سيتم حفظ البيانات مؤقتاً ومزامنتها تلقائياً عند عودة الاتصال.</span>
+  </div>
+
+  <!-- شريط التنقل العلوي -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <span class="material-icons">assignment</span>
+      <span>المالية والحسابات</span>
+    </div>
+    <div class="topbar-actions">
+      <!-- زر لوحة مراقبة المشرف الخاص — مخفي عن الجميع -->
+      <button class="btn-sa-monitor" id="superAdminMonitorBtn"
+        onclick="openSuperAdminPanel()" title="لوحة المراقبة">
+        <span class="material-icons">monitor_heart</span>
+        <span>مراقبة النظام</span>
+      </button>
+      <!-- زر لوحة تحكم المشرف — للمشt�فين فقط -->
+      <button class="btn-supervisor-panel" id="supervisorPanelBtn"
+        onclick="openSupervisorPanel()" title="لوحة تحكم المشرف">
+        <span class="material-icons">admin_panel_settings</span>
+        <span>تحكم المشرف</span>
+      </button>
+      <button class="btn-admin-panel" onclick="openAdminPanel()" title="لوحة الإدارة">
+        <span class="material-icons">dashboard</span>
+        <span>لوحة الإدارة</span>
+      </button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع المظلم">
+        <span class="material-icons" id="themeIcon">dark_mode</span>
+      </button>
+      <button class="btn btn-icon" onclick="doLogout()" title="تسجيل الخروج">
+        <span class="material-icons">logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="main-container">
+
+    <!-- بطاقة معلومات المستخدم -->
+    <div class="user-card">
+      <!-- أيقونة الملاحظات الشخصية الخاصة — مساحة آمنة خاصة بكل موظف فقط -->
+      <button class="user-notes-btn" onclick="openPersonalNotes()" title="ملاحظاتي الشخصية" aria-label="ملاحظاتي الشخصية">
+        <span class="material-icons">edit_note</span>
+      </button>
+      <div class="user-card-inner">
+        <div class="user-card-top">
+          <div class="user-avatar">
+            <span class="material-icons">person</span>
+          </div>
+          <div>
+            <div class="user-name" id="displayName">—</div>
+            <div class="user-id" id="displayId">الرقم الذاتي: —</div>
+          </div>
+        </div>
+        <div class="user-info-chips">
+          <div class="chip">
+            <span class="material-icons">business</span>
+            <span id="displayOffice">—</span>
+          </div>
+          <div class="chip">
+            <span class="material-icons">work_outline</span>
+            <span id="displayJob">—</span>
+          </div>
+          <div class="chip" id="supervisorBadge" style="display:none;">
+            <span class="material-icons">admin_panel_settings</span>
+            <span id="supervisorLabel">��شرف</span>
+          </div>
+        </div>
+        <div class="user-profile-toggle" id="userProfileToggle" onclick="toggleUserProfileExtra()">
+          <span class="material-icons">expand_more</span>
+          <span>عرض كامل البيانات</span>
+        </div>
+        <div class="user-profile-extra" id="userProfileExtra"></div>
+      </div>
+    </div>
+
+    <!-- التبويبات الرئيسية -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('submitTab', this)">
+        <span>إدخال الأعمال</span>
+      </div>
+      <div class="tab" onclick="switchTab('reviewTab', this); loadReviewMonths()">
+        <span>مراجعة الإدخالات</span>
+      </div>
+      <div class="tab workers-tab" id="workersTabBtn"
+        onclick="switchTab('workersTab', this); loadWorkersList()">
+        <span>العاملين</span>
+      </div>
+    </div>
+
+    <!-- تبويب إدخال الأعمال -->
+    <div class="tab-content active" id="submitTab">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="material-icons">edit_note</span>
+            تسجيل الأعمال المنفذة
+          </div>
+          <span id="currentMonthLabel" style="font-size:0.82rem; color:var(--text-muted); font-weight:600;"></span>
+        </div>
+        <div class="card-body">
+          <div class="input-group">
+            <label class="input-label">الأعمال المنفذة *</label>
+            <textarea id="workDone" class="textarea-field"
+              placeholder="اكتب الأعمال التي أنجزتها اليوم بالتفصيل..."></textarea>
+          </div>
+          <div class="input-group">
+            <label class="input-label">الدوام *</label>
+            <select id="shiftSelect" class="select-field">
+              <option value="">-- اختر الدوام --</option>
+              <option value="موجود">موجود</option>
+              <option value="غير موجود">غير موجود</option>
+              <option value="مهمه">مهمه</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="submitWork()" id="submitBtn">
+            <span class="material-icons">send</span>
+            <span id="submitBtnText">إرسال</span>
+            <span id="submitSpinner" style="display:none;"><span class="spinner"></span></span>
+          </button>
+
+          <!-- زر تصدير Excel — مخفي، يظهر للمشرفين المحددين فقط -->
+          <button class="btn btn-export-excel" id="exportExcelBtn" onclick="exportWorkExcel()" title="تصدير بيانات الشهر الحالي إلى Excel">
+            <span class="material-icons">table_view</span>
+            تصدير Excel
+          </button>
+
+          <!-- قائمة الإدخالات المحفوظة محلياً بانتظار المزامنة (Offline Mode) -->
+          <div class="offline-queue" id="offlineQueue" style="display:none;">
+            <div class="offline-queue-title">
+              <span class="material-icons">cloud_sync</span>
+              <span>إدخالات محفوظة محلياً بانتظار المزامنة</span>
+            </div>
+            <div id="offlineQueueList"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- تبويب مراجعة الإدخالات -->
+    <div class="tab-content" id="reviewTab">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="material-icons">calendar_today</span>
+            مراجعة الإدخالات
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="input-group" style="margin-bottom:8px;">
+            <label class="input-label" for="monthSelect">اختر الشهر</label>
+            <select id="monthSelect" class="select-field" onchange="onReviewMonthChanged(this.value)">
+              <option value="" selected disabled>جارٍ تحميل الشهور...</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin-bottom:8px;">
+            <label class="input-label" for="daySelect">اختر يوماً</label>
+            <select id="daySelect" class="select-field" onchange="loadEntriesForDay(this.value)">
+              <option value="" selected disabled>اختر يوماً</option>
+            </select>
+          </div>
+          <div id="entriesContainer">
+            <div class="empty-state">
+              <span class="material-icons">event_note</span>
+              <p>اختر يوماً لعرض الإدخالات</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- تبويب العاملين (للمشرفين فقط) -->
+    <div class="tab-content" id="workersTab">
+      <div class="card">
+        <div class="card-header">
+          <div class="workers-heading">
+            <div class="card-title">
+              <span class="section-icon section-icon-workers" aria-hidden="true">
+                <span class="material-icons">groups</span>
+              </span>
+              <span>
+                <span class="workers-heading-title">قائمة العاملين</span>
+                <span class="workers-heading-subtitle">إدارة البيانات والملفات والتقارير بسهولة</span>
+              </span>
+            </div>
+          </div>
+          <button class="btn btn-manage-workers" id="manageWorkersBtn" onclick="openWorkerModal()" title="إضافة أو حذف عامل" aria-label="إضافة أو حذف عامل">
+            <span class="material-icons">manage_accounts</span>
+            <span>إدارة العاملين</span>
+          </button>
+        </div>
+        <div class="card-body" id="workersTabBody">
+          <div id="workersListView">
+            <div class="empty-state">
+              <span class="material-icons">hourglass_empty</span>
+              <p>جارٍ التحميل...</p>
+            </div>
+          </div>
+          <div id="workerReportsView" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- صفحة الملاحظات الشخصية الخاصة — صفحة مستقلة بالكامل، وليست نافذة منبثقة -->
+<div class="notes-page" id="personalNotesModal">
+  <div class="notes-page-header">
+    <button class="notes-back-btn" onclick="closePersonalNotes()" title="العودة إلى النظام الرئيسي">
+      <span class="material-icons">arrow_forward</span> العودة إلى النظام الرئيسي
+    </button>
+    <div class="notes-page-title">
+      <span class="material-icons">edit_note</span>
+      ملاحظاتي الشخصية
+    </div>
+  </div>
+
+  <div class="notes-page-body">
+    <div class="notes-privacy-banner">
+      <span class="material-icons">verified_user</span>
+      <span>
+        <strong>هذه الملاحظات مشفرة بالكامل وسرّية تماماً.</strong>
+        لا يمكن لأي شخص آخر الاطلاع على محتواها — بما في ذلك المشرفون، مدير النظام، أو مالك الموقع.
+        يتم تخزينها في جدول البيانات كنص مشفّر فقط، ولا يتم فك تشفيرها إلا عند دخولك بجلستك الخاصة بك.
+      </span>
+    </div>
+
+    <!-- عرض قائمة الملاحظات -->
+    <div id="notesListView">
+      <div class="notes-toolbar">
+        <div class="notes-search-box">
+          <span class="material-icons">search</span>
+          <input type="text" id="notesSearchInput" placeholder="ابحث في ملاحظاتك..." oninput="renderNotesList()">
+        </div>
+        <select id="notesSortSelect" class="select-field notes-sort-select" onchange="renderNotesList()">
+          <option value="updated_desc">الأحدث تعديلاً</option>
+          <option value="created_desc">الأحدث إنشاءً</option>
+          <option value="title_asc">العنوان (أ - ي)</option>
+        </select>
+        <button class="btn btn-primary notes-add-btn" onclick="openNoteEditor(null)">
+          <span class="material-icons">add</span> ملاحظة جديدة
+        </button>
+      </div>
+
+      <div class="notes-list-scroll">
+        <div class="notes-loading" id="notesLoadingState">
+          <span class="spinner"></span> جارٍ تحميل ملاحظاتك...
+        </div>
+        <div class="empty-state" id="notesEmptyState" style="display:none;">
+          <span class="material-icons">note_alt</span>
+          <p>لا توجد ملاحظات بعد — ابدأ بإضافة أول ملاحظة لك</p>
+        </div>
+        <div id="notesGrid" class="notes-grid"></div>
+      </div>
+    </div>
+
+    <!-- محرر الملاحظة (إنشاء / تعديل) -->
+    <div id="noteEditorView" style="display:none;">
+      <div class="input-group">
+        <label class="input-label">عنوان الملاحظة</label>
+        <input type="text" id="noteEditorTitle" class="input-field" placeholder="عنوان الملاحظة..." maxlength="150">
+      </div>
+      <div class="input-group">
+        <label class="input-label">محتوى الملاحظة</label>
+        <textarea id="noteEditorContent" class="textarea-field notes-editor-textarea" placeholder="اكتب ملاحظتك هنا... لن يطّلع عليها أحد سواك"></textarea>
+      </div>
+      <div class="notes-editor-meta" id="noteEditorMeta"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="saveNoteFromEditor()" id="noteSaveBtn">
+          <span class="material-icons">save</span>
+          <span id="noteSaveBtnText">حفظ</span>
+          <span id="noteSaveSpinner" style="display:none;"><span class="spinner"></span></span>
+        </button>
+        <button class="btn btn-outline" onclick="backToNotesList()">
+          <span class="material-icons">arrow_forward</span> رجوع
+        </button>
+        <button class="btn btn-danger" id="noteDeleteBtn" style="display:none;" onclick="deleteNoteFromEditor()">
+          <span class="material-icons">delete_outline</span> حذف
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- مربع حوار التعديل -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-title">
+      <span class="material-icons">drive_file_rename_outline</span>
+      تعديل الإدخال
+    </div>
+    <input type="hidden" id="editRowIndex">
+    <div class="input-group">
+      <label class="input-label">الأعمال المنفذة</label>
+      <textarea id="editWorkDone" class="textarea-field" style="min-height:220px;resize:vertical;"></textarea>
+    </div>
+    <div class="input-group">
+      <label class="input-label">الدوام</label>
+      <select id="editShift" class="select-field">
+        <option value="موجود">موجود</option>
+        <option value="غير موجود">غير موجود</option>
+        <option value="مهمة">مهمة</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveEdit()" id="saveEditBtn">
+        <span class="material-icons">save</span>
+        <span id="saveEditText">حفظ التعديل</span>
+        <span id="saveEditSpinner" style="display:none;"><span class="spinner"></span></span>
+      </button>
+      <button class="btn btn-outline" onclick="closeModal('editModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- مربع حوار اختيار الشيت الشهري لتصدير Excel -->
+<div class="modal-overlay" id="exportSheetModal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-title">
+      <span class="material-icons">table_view</span>
+      اختيار الشيت للتصدير
+    </div>
+    <div class="modal-info-note">
+      <span class="material-icons">info</span>
+      <span>اختر الشهر الذي تريد حفظ بياناته في ملف Excel.</span>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="exportSheetSelect">الشيت الشهري</label>
+      <select id="exportSheetSelect" class="select-field">
+        <option value="" selected disabled>جارٍ تحميل الشهور...</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-success" onclick="confirmExportWorkExcel()" id="confirmExportSheetBtn">
+        <span class="material-icons">download</span>
+        تصدير الشيت المحدد
+      </button>
+      <button class="btn btn-outline" onclick="closeModal('exportSheetModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- مربع حوار إضافة / حذف عامل -->
+<div class="modal-overlay" id="workerModal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-title">
+      <span class="material-icons">manage_accounts</span>
+      <span>إضافة / تعديل عامل</span>
+      <button class="modal-close-btn" type="button" onclick="closeWorkerModal()" aria-label="إغلاق نافذة إدارة العاملين" title="إغلاق">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label" for="workerFormUserId">الرقم الذاتي</label>
+      <div class="input-wrapper">
+        <input type="text" id="workerFormUserId" class="input-field" placeholder="أدخل الرقم الذاتي" inputmode="numeric" autocomplete="off">
+        <span class="material-icons field-icon">badge</span>
+      </div>
+      <div class="field-error-msg" id="err-workerFormUserId"><span class="material-icons">error_outline</span><span>الرقم الذاتي مطلوب</span></div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label" for="workerFormName">الاسم</label>
+      <div class="input-wrapper">
+        <input type="text" id="workerFormName" class="input-field" placeholder="أدخل اسم العامل" autocomplete="off">
+        <span class="material-icons field-icon">person</span>
+      </div>
+      <div class="field-error-msg" id="err-workerFormName"><span class="material-icons">error_outline</span><span>الاسم مطلوب</span></div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label" for="workerFormOffice">الشعبة / الوحدة</label>
+      <div class="input-wrapper">
+        <input type="text" id="workerFormOffice" class="input-field" placeholder="أدخل الشعبة أو الوحدة" autocomplete="off">
+        <span class="material-icons field-icon">apartment</span>
+      </div>
+    </div>
+
+    <div class="input-group" style="margin-bottom:0;">
+      <label class="input-label" for="workerFormJobTitle">المسمى الوظيفي</label>
+      <div class="input-wrapper">
+        <input type="text" id="workerFormJobTitle" class="input-field" placeholder="أدخل المسمى الوظيفي" autocomplete="off">
+        <span class="material-icons field-icon">work_outline</span>
+      </div>
+    </div>
+
+    <div class="worker-modal-actions">
+      <button class="btn btn-worker-find" onclick="workerFind()" id="workerFindBtn" style="grid-column:1 / -1;">
+        <span class="material-icons">search</span>
+        <span id="workerFindText">استدعاء</span>
+        <span id="workerFindSpinner" style="display:none;"><span class="spinner"></span></span>
+      </button>
+      <button class="btn btn-primary" onclick="workerAdd()" id="workerAddBtn">
+        <span class="material-icons">person_add</span>
+        <span id="workerAddText">إضافة</span>
+        <span id="workerAddSpinner" style="display:none;"><span class="spinner"></span></span>
+      </button>
+      <button class="btn btn-primary" onclick="workerUpdate()" id="workerUpdateBtn" style="display:none;">
+        <span class="material-icons">save</span>
+        <span id="workerUpdateText">تعديل</span>
+        <span id="workerUpdateSpinner" style="display:none;"><span class="spinner"></span></span>
+      </button>
+      <button class="btn btn-worker-delete" onclick="workerDelete()" id="workerDeleteBtn" style="display:none;">
+        <span class="material-icons">delete_forever</span>
+        <span id="workerDeleteText">حذف</span>
+        <span id="workerDeleteSpinner" style="display:none;"><span class="spinner"></span></span>
+      </button>
+      <button class="btn btn-outline" onclick="closeWorkerModal()" style="grid-column:1 / -1;">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- مربع حوار معلومات العامل -->
+<div class="modal-overlay" id="workerProfileModal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-title">
+      <span class="material-icons">badge</span>
+      <span>معلومات العامل</span>
+      <button class="modal-close-btn" type="button" onclick="closeModal('workerProfileModal')" aria-label="إغلاق معلومات العامل" title="إغلاق">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div id="workerProfileBody">
+      <div class="empty-state">
+        <span class="material-icons">hourglass_empty</span>
+        <p>جارٍ تحميل البيانات...</p>
+      </div>
+    </div>
+    <div class="modal-actions" style="margin-top:18px;">
+      <button class="btn btn-outline" onclick="closeModal('workerProfileModal')" style="flex:1;">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- غطاء التحميل -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner spinner-dark" style="width:44px;height:44px;border-width:4px;"></div>
+  <p id="loadingMsg">جارٍ التحميل...</p>
+</div>
+
+<!-- Toast Container -->
+<div id="toastContainer"></div>
+
+  <!-- =============================================
+       JavaScript — الإعدادات والتواصل مع الخادم
+  ============================================= -->
+  <!-- 1) إعدادات الاتصال (API_URL) — عدّل هذا الملف فقط -->
+  <script src="js/config.js"></script>
+
+  <!-- 2) طبقة التواصل مع الخادم (تحاكي google.script.run عبر fetch) -->
+  <script src="js/api.js"></script>
+
+  <!-- 3) منطق التطبيق الكامل -->
+  <script src="js/app.js"></script>
+
+  <!-- تسجيل Service Worker للعمل دون اتصال -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js')
+          .then(function (reg) { console.info('[SW] مسجّل:', reg.scope); })
+          .catch(function (err) { console.warn('[SW] فشل التسجيل:', err); });
+      });
+    }
+  </script>
+
 </body>
 </html>
-
